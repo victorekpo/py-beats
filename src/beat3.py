@@ -45,6 +45,31 @@ def trim_audio(audio, silence_thresh=-20, buffer_ms=0, trim_location=None, trim_
 
     return trimmed_audio
 
+# 🎚️ Apply a simple reverb effect (for a slight echo)
+def apply_reverb(audio, reverb_amount=5):
+    """
+    Apply a basic reverb effect to the audio using volume manipulation.
+    :param audio: AudioSegment to apply reverb to.
+    :param reverb_amount: Amount of reverb effect (higher = more reverb).
+    :return: AudioSegment with reverb.
+    """
+    reverb_audio = audio
+    for i in range(reverb_amount):
+        reverb_audio = reverb_audio + 2  # Simulate reverb by adding faint echoes
+    return reverb_audio
+
+# 🎚️ Apply a simple delay effect (for rhythmic echo)
+def apply_delay(audio, delay_amount=100):
+    """
+    Apply a simple delay effect to the audio (in milliseconds).
+    :param audio: AudioSegment to apply delay to.
+    :param delay_amount: Delay in milliseconds.
+    :return: AudioSegment with delay.
+    """
+    delay_audio = audio
+    delay_audio = delay_audio + delay_amount  # Shift audio by delay
+    return delay_audio
+
 # Create a basic drum pattern
 def create_drum_pattern():
     pattern = []
@@ -67,10 +92,14 @@ def play_beat():
     global kick, snare, hihat, piano  # Update samples globally to trim them
 
     # Trim all samples dynamically
-    kick = trim_audio(kick, silence_thresh=-30, trim_location="end", trim_length_ms=100)
+    kick = trim_audio(kick, silence_thresh=-30, trim_location="end", trim_length_ms=130)
     snare = trim_audio(snare, silence_thresh=-30, trim_location="end", trim_length_ms=10)
-    hihat = trim_audio(hihat, silence_thresh=-40, trim_location="specific_time", trim_length_ms=10)
+    hihat = trim_audio(hihat, silence_thresh=-40, trim_location="end", trim_length_ms=10)
     piano = trim_audio(piano, silence_thresh=-20, trim_location="beginning", trim_length_ms=10)
+
+    # Apply effects to the audio
+    kick = apply_reverb(kick, reverb_amount=3)  # Reverb on kick
+    snare = apply_delay(snare, delay_amount=150)  # Delay on snare
 
     pattern = create_drum_pattern()
     melody = create_melody()

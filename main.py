@@ -1,4 +1,5 @@
 # This is a sample Python script.
+from src.beat1 import play_beat
 from src.beat2 import BeatGrid, play_beat_grid
 
 
@@ -15,7 +16,7 @@ def print_hi(name):
 if __name__ == '__main__':
     # print_hi('PyCharm')
     # Call the function to play the beat
-    # play_beat()
+    play_beat()
 
     # Create the grid and add instruments
     beat_grid = BeatGrid(tempo=120)
@@ -27,6 +28,6 @@ if __name__ == '__main__':
     beat_grid.add_instrument("piano", [1, 2, 3])  # Play piano on beats 1, 2, and 3
 
     # Example: Playing the beat grid
-    play_beat_grid(beat_grid)
+   # play_beat_grid(beat_grid)
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
